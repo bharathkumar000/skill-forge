@@ -52,37 +52,38 @@ const QuizHub: React.FC = () => {
                {/* Accent decoration */}
                <div className="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-[#2563eb] via-[#8b5cf6] to-[#f59e0b]" />
 
-              <div className="flex flex-col items-center gap-24">
+              <div className="flex flex-col items-center gap-24 pt-12 md:pt-16">
                 {/* LOGO CONTAINER: Centered and Gapped */}
                 <div className="text-center group w-full flex flex-col items-center">
-                  <div className="w-56 h-56 flex items-center justify-center mb-16 transition-transform duration-500 hover:scale-110">
+                  <div className="w-56 h-56 flex items-center justify-center">
                      <img 
                         src={ivcLogo} 
                         alt="IVC Logo" 
-                        className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-700 shadow-xl" 
+                        className="w-full h-full object-contain bg-white p-4 shadow-xl" 
                         style={{ borderRadius: '48px' }}
                      />
                   </div>
-                  <p className="font-display text-4xl tracking-[1.4rem] text-[#0f172a] font-black uppercase mb-0 -mr-[1.4rem] leading-none">
-                    AUTHORIZATION KEY
-                  </p>
-                  <p className="text-[14px] tracking-[0.4em] text-[#94a3b8] font-black uppercase mt-1">SECURED TERMINAL ACCESS REQUIRED</p>
                 </div>
 
-                <form onSubmit={handleStartQuiz} className="w-full flex flex-col items-center gap-24">
-                  <input
-                    type="text"
-                    autoFocus
-                    placeholder="KEY-XXXX-XXXX"
-                    value={accessCode}
-                    onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
-                    className="w-full bg-[#f8fafc] border-2 border-[#e2e8f0] px-20 py-20 text-7xl text-center text-[#0f172a] font-display font-black tracking-[0.4em] rounded-[48px] outline-none focus:border-[#2563eb]/40 focus:bg-white focus:shadow-[0_60px_100px_rgba(37,99,235,0.12)] transition-all duration-500 placeholder:text-[#cbd5e1] placeholder:text-3xl placeholder:tracking-[0.2em] placeholder:font-black"
-                  />
+                <form onSubmit={handleStartQuiz} className="w-full flex flex-col items-center gap-16">
+                  <h1 className="font-display text-4xl tracking-[0.4em] text-[#0f172a] font-black uppercase mb-0 -mr-[0.4em] leading-none text-center">
+                    AUTHORIZATION KEY
+                  </h1>
+                  <div className="w-full max-w-2xl">
+                    <input
+                      type="text"
+                      autoFocus
+                      placeholder="KEY-XXXX-XXXX"
+                      value={accessCode}
+                      onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
+                      className="w-full h-24 bg-[#f8fafc] border-2 border-[#e2e8f0] px-12 text-3xl text-center text-[#0f172a] font-display font-black tracking-[0.4em] rounded-full outline-none focus:border-[#2563eb]/40 focus:bg-white focus:shadow-[0_40px_80px_rgba(37,99,235,0.15)] transition-all duration-500 placeholder:text-[#cbd5e1] placeholder:tracking-[0.4em] placeholder:font-black focus:outline-none"
+                    />
+                  </div>
                   
                   <button
                     type="submit"
                     disabled={isValidating}
-                    className="w-full py-16 bg-[#0f172a] text-white font-display text-4xl tracking-[0.3em] font-black uppercase rounded-[48px] hover:bg-[#1e293b] hover:shadow-[0_60px_100px_rgba(15,23,42,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-500 cursor-pointer disabled:opacity-40"
+                    className="w-full h-24 bg-[#0f172a] text-white font-display text-2xl tracking-[0.3em] font-black uppercase rounded-full hover:bg-[#1e293b] hover:shadow-[0_40px_80px_rgba(15,23,42,0.25)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-500 cursor-pointer disabled:opacity-40 flex items-center justify-center focus:outline-none"
                   >
                     {isValidating ? 'SYNCHRONIZING...' : 'AUTHORIZE ACCESS'}
                   </button>
