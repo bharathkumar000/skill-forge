@@ -79,27 +79,32 @@ const AdminDashboard: React.FC = () => {
               {/* QUESTIONS TAB */}
               {activeTab === 'questions' && (
                 <motion.div key="q" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                  className="bg-white rounded-2xl p-8 border border-[#e2e8f0] shadow-sm"
+                  className="bg-white rounded-[32px] p-12 border border-[#e2e8f0] shadow-[0_30px_60px_rgba(0,0,0,0.05)]"
                 >
-                  <div className="flex justify-between items-center mb-8">
-                    <h2 className="font-display text-xl font-bold tracking-[0.1em] text-[#0f172a] uppercase">QUESTION EDITOR</h2>
-                    <button onClick={addQuestion} className="px-5 py-2 bg-[#0f172a] text-white font-display text-[10px] tracking-[0.2em] font-bold uppercase rounded-lg flex items-center gap-2 cursor-pointer hover:bg-[#1e293b] transition-all">
-                      <Plus className="w-3.5 h-3.5" /> ADD
+                  <div className="flex justify-between items-center mb-12">
+                    <h2 className="font-display text-2xl font-black tracking-tight text-[#0f172a] uppercase">QUESTION EDITOR</h2>
+                    <button onClick={addQuestion} className="px-8 py-4 bg-[#0f172a] text-white font-display text-xs tracking-widest font-black uppercase rounded-xl flex items-center gap-3 cursor-pointer hover:bg-[#1e293b] hover:shadow-xl transition-all active:scale-95">
+                      <Plus className="w-4 h-4" /> ADD NEW
                     </button>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {questions.map(q => (
-                      <div key={q.id} className="bg-[#f8fafc] border border-[#e2e8f0] p-5 rounded-xl flex items-center justify-between hover:border-[#3b82f6]/30 transition-colors group">
-                        <div>
-                          <p className="text-[9px] text-[#3b82f6] tracking-widest uppercase font-bold mb-1">Q_ID: {q.id}</p>
-                          <p className="text-sm text-[#0f172a] font-medium">{q.text || 'New question...'}</p>
+                      <div key={q.id} className="bg-[#f8fafc] border border-[#e2e8f0] p-7 rounded-[20px] flex items-center justify-between hover:border-[#3b82f6]/40 transition-all duration-300 group">
+                        <div className="flex items-center gap-6">
+                           <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center font-display font-black text-[#cbd5e1] border border-[#e2e8f0] group-hover:text-[#3b82f6] group-hover:border-[#3b82f6]/20 transition-colors">
+                              {q.id}
+                           </div>
+                           <div>
+                              <p className="text-[10px] text-[#3b82f6] tracking-[0.2em] uppercase font-black mb-1">DATA_POINT</p>
+                              <p className="text-base text-[#0f172a] font-bold">{q.text || 'New analytical prompt...'}</p>
+                           </div>
                         </div>
-                        <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => reflectToUser(q.id)} className="p-2 bg-[#3b82f6]/10 border border-[#3b82f6]/20 rounded-lg text-[#3b82f6] hover:bg-[#3b82f6] hover:text-white transition-all cursor-pointer" title="Reflect to Users">
-                            <Send className="w-3.5 h-3.5" />
+                        <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
+                          <button onClick={() => reflectToUser(q.id)} className="p-3.5 bg-white border border-[#e2e8f0] rounded-xl text-[#3b82f6] hover:bg-[#3b82f6] hover:text-white hover:border-[#3b82f6] transition-all cursor-pointer shadow-sm" title="Reflect to Users">
+                            <Send className="w-4 h-4" />
                           </button>
-                          <button className="p-2 bg-red-50/50 border border-red-100 rounded-lg text-red-500 hover:bg-red-500 hover:text-white transition-all cursor-pointer">
-                            <Trash2 className="w-3.5 h-3.5" />
+                          <button className="p-3.5 bg-white border border-[#e2e8f0] rounded-xl text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all cursor-pointer shadow-sm">
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
