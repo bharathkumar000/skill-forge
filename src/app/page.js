@@ -28,11 +28,18 @@ export default function LandingPortal() {
   const [isSignOutLoading, setIsSignOutLoading] = useState(false);
 
   useEffect(() => {
-    async function getUser() {
+    async function checkAuth() {
       const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+      // Also check for mock session cookie
+      const hasMockSession = document.cookie.includes("mock_session=");
+      
+      if (!user && !hasMockSession) {
+        router.push("/login");
+      } else {
+        setUser(user);
+      }
     }
-    getUser();
+    checkAuth();
   }, []);
 
   const handleSignOut = async () => {
