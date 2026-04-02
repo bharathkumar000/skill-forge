@@ -19,7 +19,7 @@ export default function AuthorizationGateway() {
     // Simulate validation
     setTimeout(() => {
       if (accessCode === "1234" || accessCode === "1") {
-        router.push("/quiz");
+        router.push("/dashboard");
       } else {
         setError("Invalid protocol code.");
         setLoading(false);
