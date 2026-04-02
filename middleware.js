@@ -28,6 +28,7 @@ export async function middleware(request) {
     }
   );
 
+  const { data: { user } } = await supabase.auth.getUser();
   const mockSession = request.cookies.get("mock_session")?.value;
   const isMockUser = mockSession === "user";
   const isMockAdmin = mockSession === "admin";
