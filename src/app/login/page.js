@@ -53,7 +53,7 @@ export default function LoginPage() {
     // Quick admin bypass
     if (email === "2" || password === "2") {
       document.cookie = "mock_session=admin; path=/";
-      router.push("/quiz/admin");
+      router.push("/dashboard");
       return;
     }
 
