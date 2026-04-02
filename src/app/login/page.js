@@ -14,7 +14,8 @@ import {
   LogOut,
   Trophy,
   Settings,
-  ChevronDown
+  ChevronDown,
+  Mail
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -43,10 +44,16 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    // Bypass for 1234
-    if (email === "1234" || password === "1234") {
+    if (email === "1234" || password === "1234" || email === "1" || password === "1") {
       document.cookie = "mock_session=user; path=/";
-      router.push("/quiz");
+      router.push("/authorization");
+      return;
+    }
+    
+    // Quick admin bypass
+    if (email === "2" || password === "2") {
+      document.cookie = "mock_session=admin; path=/";
+      router.push("/quiz/admin");
       return;
     }
 
@@ -59,7 +66,7 @@ export default function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      router.push("/quiz");
+      router.push("/authorization");
     }
   };
 
@@ -171,28 +178,34 @@ export default function LoginPage() {
               {loading ? <Loader2 size={18} className="animate-spin" /> : <span>Execute Login</span>}
             </button>
 
+            <AnimatePresence>
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="bg-red-50 border border-red-100 rounded-xl p-3 text-center mt-4"
+                >
+                  <p className="text-red-500 text-[10px] font-black uppercase tracking-widest leading-normal">
+                    {error}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="relative my-8 text-center text-xs font-bold text-[#94A3B8] uppercase tracking-widest">
               <div className="absolute inset-x-0 top-1/2 h-px bg-[#E2E8F0] transition-all" />
               <span className="relative z-10 bg-white px-6">Dual Authentication</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex justify-center">
               <button 
                 type="button"
                 onClick={handleGoogleLogin}
-                className="flex items-center justify-center gap-3 bg-white border border-[#E2E8F0] py-4 rounded-[20px] hover:bg-[#F8FAFC] transition-all group"
+                className="flex w-full max-w-[280px] items-center justify-center gap-3 bg-white border border-[#E2E8F0] py-4 rounded-[20px] hover:bg-[#F8FAFC] transition-all group"
               >
                 <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" className="w-5 h-5" alt="Google" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-[#1E293B]">Google</span>
-              </button>
-              <button 
-                type="button"
-                className="flex items-center justify-center gap-3 bg-white border border-[#E2E8F0] py-4 rounded-[20px] hover:bg-[#F8FAFC] transition-all group"
-              >
-                <div className="w-5 h-5 bg-[#F1F5F9] rounded-md flex items-center justify-center">
-                  <Fingerprint size={14} className="text-[#64748B]" />
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#1E293B]">Biometric</span>
               </button>
             </div>
           </form>
