@@ -3,35 +3,18 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Shield, 
-  BarChart3, 
-  BookText, 
-  Users2 as UsersIcon, 
-  FileBox, 
   LogOut, 
-  Plus, 
-  Activity, 
   FileText, 
   LayoutDashboard,
-  Search,
-  Bell,
-  ChevronDown,
-  ArrowRight,
-  Trophy,
-  History,
   Zap,
-  Lock,
-  Medal,
-  Dna,
-  X,
-  Clock,
-  Target,
-  BarChart,
-  ArrowLeft,
-  Settings,
   ShieldCheck,
   Menu,
-  Users
+  X,
+  Users,
+  Settings,
+  Activity,
+  Trophy,
+  History
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -60,20 +43,21 @@ export default function Sidebar() {
     router.push("/login");
   };
 
-  const isAdmin = role === "admin";
+  const isAdmin = role === "admin" || role === "evaluator";
 
   const adminItems = [
-    { href: "/quiz/admin", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/quiz/admin", label: "Control Center", icon: LayoutDashboard },
     { href: "/quiz/admin/quizzes", label: "Protocols", icon: FileText },
-    { href: "/quiz/admin/users", label: "Users", icon: Users },
-    { href: "/quiz/admin/security", label: "Security", icon: ShieldCheck },
-    { href: "/dashboard/reports", label: "Reports", icon: FileText },
+    { href: "/quiz/admin/users", label: "Node Registry", icon: Users },
+    { href: "/quiz/admin/security", label: "Security Audit", icon: ShieldCheck },
+    { href: "/dashboard/reports", label: "Intelligence", icon: Activity },
   ];
 
   const candidateItems = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/quiz/access", label: "Protocols", icon: FileText },
-    { href: "/dashboard/reports", label: "Reports", icon: FileText },
+    { href: "/dashboard", label: "Command Center", icon: LayoutDashboard },
+    { href: "/quiz/access", label: "Active Access", icon: Zap },
+    { href: "/dashboard/reports", label: "My Logs", icon: History },
+    { href: "/quiz/leaderboard", label: "Hall of Fame", icon: Trophy },
   ];
 
   const navItems = isAdmin ? adminItems : candidateItems;
@@ -83,9 +67,9 @@ export default function Sidebar() {
       {/* Mobile Toggle Button */}
       <button 
         onClick={toggleSidebar}
-        className="fixed top-4 left-4 z-[60] lg:hidden p-2.5 bg-white rounded-xl shadow-xl shadow-blue-200 text-[#0F172A] border border-[#f1f5f9] active:scale-90 transition-transform"
+        className="fixed top-6 left-6 z-[70] lg:hidden p-4 bg-white rounded-2xl shadow-2xl shadow-blue-200 text-[#0F172A] border border-[#f1f5f9] active:scale-95 transition-all"
       >
-        {isOpen ? <X size={18} /> : <Menu size={18} />}
+        {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
       {/* Backdrop for mobile */}
@@ -96,67 +80,88 @@ export default function Sidebar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={toggleSidebar}
-            className="fixed inset-0 bg-[#0F172A]/20 backdrop-blur-sm z-[55] lg:hidden"
+            className="fixed inset-0 bg-[#0F172A]/40 backdrop-blur-md z-[60] lg:hidden"
           />
         )}
       </AnimatePresence>
 
-      <aside className={`fixed left-0 top-0 bottom-0 w-[240px] bg-white border-r border-[#E8EDF2] flex flex-col z-[58] transition-transform duration-500 ease-in-out lg:translate-x-0 ${
+      <aside className={`fixed left-0 top-0 bottom-0 w-[280px] bg-[#0F172A] text-white flex flex-col z-[65] transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] lg:translate-x-0 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}>
-        {/* Logo */}
-        <div className="px-10 h-24 flex items-center gap-4">
-          <div className="w-10 h-10 bg-[#2563EB] rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200">
-            <ShieldCheck className="w-6 h-6 text-white" />
-          </div>
-          <span className="font-black text-2xl text-[#0F172A] tracking-tighter">Skill Forge</span>
+        {/* Decorative Gradient */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+           <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[40%] bg-gradient-to-b from-blue-500/30 to-transparent blur-3xl saturate-150 rotate-12" />
         </div>
 
-        {/* User Role Indicator */}
-        <div className="px-8 mb-6">
-           <div className={`p-4 rounded-[24px] border ${isAdmin ? "bg-blue-50 border-blue-100" : "bg-slate-50 border-slate-100"} flex items-center gap-3`}>
-              <div className={`w-2 h-2 rounded-full ${isAdmin ? "bg-primary-blue animate-pulse" : "bg-slate-400"}`} />
-              <span className={`text-[10px] font-black uppercase tracking-widest ${isAdmin ? "text-primary-blue" : "text-slate-500"}`}>
-                {isAdmin ? "Superuser Access" : "Candidate Station"}
-              </span>
+        {/* Logo Section */}
+        <div className="px-10 h-28 flex items-center gap-4 relative z-10">
+          <div className="w-11 h-11 bg-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.4)] border border-blue-400/30">
+            <ShieldCheck className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <span className="font-black text-2xl text-white tracking-tighter block leading-none">SKILL<span className="text-blue-500">FORGE</span></span>
+            <span className="text-[10px] font-black tracking-[0.4em] text-white/20 uppercase mt-2 block">Enterprise v4</span>
+          </div>
+        </div>
+
+        {/* Role Identity Chip */}
+        <div className="px-8 mb-10 relative z-10">
+           <div className={`p-5 rounded-[24px] border ${isAdmin ? "bg-blue-500/10 border-blue-500/20" : "bg-white/5 border-white/10"} flex items-center gap-4 group transition-all`}>
+              <div className={`w-2.5 h-2.5 rounded-full ${isAdmin ? "bg-blue-400 animate-pulse shadow-[0_0_10px_#60A5FA]" : "bg-white/20"}`} />
+              <div>
+                <span className={`text-[10px] font-black uppercase tracking-[0.2em] block leading-none ${isAdmin ? "text-blue-400" : "text-white/40"}`}>
+                  {isAdmin ? "Superuser Node" : "Standard Entity"}
+                </span>
+                <span className="text-[8px] font-bold text-white/20 uppercase tracking-widest mt-1 block">Authentication Verified</span>
+              </div>
            </div>
         </div>
 
-        {/* Nav Items */}
-        <nav className="flex-1 px-6 py-4 space-y-2">
+        {/* Navigation */}
+        <nav className="flex-1 px-6 space-y-2 relative z-10 overflow-y-auto custom-scrollbar">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.label !== "Dashboard" && pathname.startsWith(item.href));
+            const isActive = pathname === item.href || (item.label !== "Control Center" && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-between px-6 py-4 transition-all text-sm font-black uppercase tracking-widest ${
+                className={`flex items-center justify-between px-6 py-5 transition-all text-[11px] font-black uppercase tracking-[0.2em] rounded-[22px] group ${
                   isActive 
-                    ? "bg-[#2563EB] text-white rounded-[22px] shadow-2xl shadow-blue-200" 
-                    : "text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#0F172A] rounded-[22px]"
+                    ? "bg-blue-600 text-white shadow-[0_15px_30px_-5px_rgba(37,99,235,0.4)]" 
+                    : "text-white/40 hover:bg-white/5 hover:text-white"
                 }`}
               >
                 <div className="flex items-center gap-5">
-                  <item.icon size={20} className={isActive ? "text-white" : "text-[#94A3B8]"} />
-                  <span className="flex-1">{item.label}</span>
+                  <item.icon size={18} className={isActive ? "text-white" : "text-white/20 group-hover:text-blue-400 transition-colors"} />
+                  <span>{item.label}</span>
                 </div>
                 {isActive && (
-                   <motion.div layoutId="active" className="w-1.5 h-1.5 bg-white rounded-full" />
+                   <motion.div layoutId="active-pill" className="w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_10px_#fff]" />
                 )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Bottom Profile/Logout */}
-        <div className="p-8 border-t border-[#f1f5f9]">
+        {/* Global Stats or Promo (Optional) */}
+        <div className="px-10 py-8 relative z-10">
+           <div className="bg-gradient-to-br from-white/5 to-transparent border border-white/5 rounded-3xl p-6">
+              <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mb-3 leading-none">Resource Load</p>
+              <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                 <motion.div initial={{ width: 0 }} animate={{ width: "42%" }} className="h-full bg-blue-500/50" />
+              </div>
+           </div>
+        </div>
+
+        {/* Footer/Logout */}
+        <div className="p-8 border-t border-white/5 relative z-10">
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center gap-4 px-6 py-5 text-xs font-black text-[#E11D48] hover:bg-rose-50 rounded-[22px] transition-all uppercase tracking-[0.2em] group"
+            className="w-full flex items-center gap-5 px-6 py-5 text-[10px] font-black text-rose-500 hover:bg-rose-500/10 rounded-[22px] transition-all uppercase tracking-[0.3em] group"
           >
-             <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />
-             <span>Terminate Sync</span>
+             <LogOut size={18} className="group-hover:-translate-x-1.5 transition-transform" />
+             <span>Deactivate Sync</span>
           </button>
         </div>
       </aside>
