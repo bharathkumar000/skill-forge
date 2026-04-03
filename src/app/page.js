@@ -45,14 +45,16 @@ export default function LoginPage() {
 
     // Mock bypass logic
     if (mode === "login") {
-      if (email === "1234" || password === "1234" || email === "1" || password === "1") {
+      if (email === "1" && password === "1") {
         document.cookie = "mock_session=user; path=/";
         router.push("/dashboard");
         return;
       }
-      if (email === "2" || password === "2") {
+      if (email === "2" && password === "2") {
         document.cookie = "mock_session=admin; path=/";
-        router.push("/dashboard");
+        // Ensure role state matches mock
+        setUserRole("evaluator");
+        router.push("/quiz/admin");
         return;
       }
 
@@ -199,7 +201,7 @@ export default function LoginPage() {
                        <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#94A3B8] group-focus-within:text-primary-blue transition-colors" />
                        <input 
                          required
-                         type="email"
+                         type="text"
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
                          placeholder="Node Email or ID"
