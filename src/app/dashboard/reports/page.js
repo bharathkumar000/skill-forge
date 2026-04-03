@@ -141,6 +141,7 @@ export default function SubmitReportPage() {
                 <button
                   type="button"
                   disabled={aiChecking || !overview.trim() || !applications.trim() || !thoughts.trim() || !improvements.trim()}
+                  title={!overview.trim() || !applications.trim() || !thoughts.trim() || !improvements.trim() ? "Protocol Insight: Please complete all report compartments to proceed." : ""}
                   onClick={() => {
                     setAiChecking(true);
                     setShowAiModal(true);
@@ -180,6 +181,7 @@ export default function SubmitReportPage() {
                 <button
                   type="submit"
                   disabled={status === "submitting" || !overview.trim() || !applications.trim() || !thoughts.trim() || !improvements.trim()}
+                  title={!overview.trim() || !applications.trim() || !thoughts.trim() || !improvements.trim() ? "Protocol Insight: Please complete all report compartments to proceed." : ""}
                   className="bg-[#0F172A] text-white px-10 py-4 rounded-full font-black text-[11px] tracking-[0.4em] uppercase shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.15)] hover:scale-[1.02] transition-all active:scale-[0.98] disabled:opacity-30 disabled:hover:scale-100 flex items-center gap-6 group"
                 >
                   {status === "submitting" ? (
