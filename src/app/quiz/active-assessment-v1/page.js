@@ -106,17 +106,17 @@ export default function ActiveAssessmentPage() {
   const progress = ((currentIdx + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen w-full bg-[#f8fafc] flex flex-col p-4 md:p-12 items-center justify-center font-sans text-[#0F172A] relative overflow-hidden">
+    <div className="h-screen w-full bg-[#f8fafc] flex flex-col p-4 md:p-8 items-center justify-center font-sans text-[#0F172A] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-[1000px] bg-white rounded-[48px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-[#E2E8F0] overflow-hidden flex flex-col p-12 relative"
+        className="w-full max-w-[1000px] max-h-[90vh] bg-white rounded-[48px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-[#E2E8F0] overflow-hidden flex flex-col p-10 relative"
       >
         {/* Header / Meta */}
-        <div className="flex justify-between items-center mb-16 px-4">
+        <div className="flex justify-between items-center mb-10 px-4">
           <div className="flex items-center gap-6">
             <div className="bg-[#EFF6FF] px-5 py-2.5 rounded-xl border border-[#DBEAFE] shadow-sm">
                <span className="text-[11px] font-black uppercase text-[#2563EB] tracking-widest leading-none">Attempt 01</span>
@@ -139,34 +139,33 @@ export default function ActiveAssessmentPage() {
             key={currentQuestion?.id}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-3xl font-extrabold text-[#0F172A] leading-tight mb-12 tracking-tight max-w-[800px]"
+            className="text-2xl font-extrabold text-[#0F172A] leading-tight mb-8 tracking-tight max-w-[800px]"
           >
             {currentQuestion?.question_text}
           </motion.h2>
 
-          <div className="grid gap-4">
+          <div className="grid gap-3 overflow-y-auto custom-scrollbar max-h-[40vh] pr-2">
             {currentQuestion?.question_type === 'mcq' ? (
               currentQuestion.options.map((opt, i) => (
                 <motion.button
                   key={i}
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
+                  whileHover={{ scale: 1.005 }}
+                  whileTap={{ scale: 0.995 }}
                   onClick={() => setAnswers(prev => ({ ...prev, [currentQuestion.id]: opt }))}
-                  className={`flex items-center gap-6 p-7 rounded-[24px] border-2 transition-all duration-300 text-left relative overflow-hidden group ${
+                  className={`flex items-center gap-4 p-5 rounded-[22px] border-2 transition-all duration-300 text-left relative overflow-hidden group ${
                     answers[currentQuestion.id] === opt 
-                      ? "border-[#2563EB] bg-[#F0F7FF] shadow-lg shadow-blue-50" 
+                      ? "border-[#2563EB] bg-[#F0F7FF] shadow-md shadow-blue-50" 
                       : "border-[#F1F5F9] hover:border-[#CBD5E1] bg-[#F8FAFC]"
                   }`}
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 shrink-0 transition-colors ${
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 shrink-0 transition-colors ${
                      answers[currentQuestion.id] === opt ? "bg-[#2563EB] border-[#2563EB]" : "bg-white border-[#E2E8F0]"
                   }`}>
-                    {answers[currentQuestion.id] === opt && <CheckCircle2 className="text-white w-5 h-5" />}
+                    {answers[currentQuestion.id] === opt && <CheckCircle2 className="text-white w-4 h-4" />}
                   </div>
-                  <span className="text-base font-bold text-[#1E293B]">{opt}</span>
-                  {/* Subtle background pill */}
-                  <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="text-[10px] font-black text-[#94A3B8] uppercase tracking-widest">Select Output</span>
+                  <span className="text-sm font-bold text-[#1E293B]">{opt}</span>
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-[9px] font-black text-[#94A3B8] uppercase tracking-widest">Select</span>
                   </div>
                 </motion.button>
               ))
@@ -176,7 +175,7 @@ export default function ActiveAssessmentPage() {
                 value={answers[currentQuestion.id] || ""}
                 onChange={(e) => setAnswers(prev => ({ ...prev, [currentQuestion.id]: e.target.value }))}
                 placeholder="Compose your technical response here..."
-                className="w-full h-48 bg-[#F8FAFC] border-2 border-[#F1F5F9] rounded-[32px] p-8 text-base font-medium placeholder:text-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all resize-none shadow-inner"
+                className="w-full h-40 bg-[#F8FAFC] border-2 border-[#F1F5F9] rounded-[28px] p-6 text-sm font-medium placeholder:text-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all resize-none shadow-inner"
               />
             )}
           </div>
