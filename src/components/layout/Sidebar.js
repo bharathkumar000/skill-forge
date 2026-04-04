@@ -62,17 +62,17 @@ export default function Sidebar() {
   const isAdmin = role === "admin" || role === "evaluator";
 
   const adminItems = [
-    { href: "/dashboard/reports", label: "Reports", icon: Activity },
     { href: "/quiz/admin", label: "Control Center", icon: LayoutDashboard },
     { href: "/quiz/admin/quizzes", label: "Protocols", icon: FileText },
     { href: "/quiz/admin/users", label: "Node Registry", icon: Users },
+    { href: "/dashboard/reports", label: "Reports", icon: Activity },
     { href: "/quiz/admin/security", label: "Security Audit", icon: ShieldCheck },
   ];
 
   const candidateItems = [
-    { href: "/dashboard/reports", label: "Reports", icon: Activity },
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/quiz/access", label: "Protocol", icon: Zap },
+    { href: "/dashboard/reports", label: "Reports", icon: Activity },
   ];
 
   const navItems = isAdmin ? adminItems : candidateItems;
